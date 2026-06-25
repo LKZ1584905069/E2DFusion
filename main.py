@@ -113,7 +113,7 @@ def train(opt, dataset):
             # # 第二步：求 vis 和 ir 中用不上的梯度
             zeros = torch.zeros_like(grad_vi)
             ones = torch.ones_like(grad_vi)
-            vis_dis = torch.where(grad_vi - grad_ir > 0, ones, zeros)
+            vis_dis = torch.where(grad_vi - grad_ir < 0, ones, zeros)
             ir_dis = 1 - vis_dis
             dis_vi = grad_vi * vis_dis  # [b,c,h,w]
             dis_ir = grad_ir * ir_dis  # [b,c,h,w]
