@@ -69,7 +69,8 @@ def train(opt, dataset):
     model = Model()
     # 初始化权重，放在cuda前面
     model.apply(gaussian_weights_init)
-
+    # 设置网络优化器
+    optimizer = Adam(model.parameters(), opt.lr)
     model.cuda()
 
     # 开始计时
@@ -88,8 +89,7 @@ def train(opt, dataset):
         for it, (img_ir, img_vi) in enumerate(dataloader):
             count += 1
             print(f'--第{ep}轮---{count} / {batch_num}----  ')
-            # 设置网络优化器
-            optimizer = Adam(model.parameters(), opt.lr)
+
             # 优化器梯度清零
             optimizer.zero_grad()
 
