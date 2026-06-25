@@ -48,7 +48,7 @@ def train(opt, dataset):
     model = Model()
 
     model.apply(gaussian_weights_init)
-
+    optimizer_G = Adam(model.parameters(), opt.lr)
     model.cuda()
 
     # 开始计时
@@ -59,7 +59,7 @@ def train(opt, dataset):
     batch_num = len(dataloader)
     # 训练的轮数， opt.epoch = 1
     for ep in range(opt.epoch):
-        print('~~~Main_GAN 训练开始！~~~~')
+        print('~~~训练开始！~~~~')
 
         # 模型设置为train模式
         model.train()
@@ -68,10 +68,6 @@ def train(opt, dataset):
         for it, (img_ir, img_vi) in enumerate(dataloader):
             count += 1
             print(f'--第{ep}轮---{count} / {batch_num}----  ')
-
-            # 设置网络优化器
-            optimizer_G = Adam(model.parameters(), opt.lr)
-
 
             # 优化器梯度清零
             optimizer_G.zero_grad()
